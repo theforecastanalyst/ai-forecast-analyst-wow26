@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Prompts, skills and links from Stephen Coles' WOW26 keynote: The Future of the Forecast Analyst in an AI-Driven World.">
+<title>WOW26 Your Move</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single mobile-first column on the deck's deep-navy stage; teal serif headings, sticky section chips, copyable prompt blocks. */
+:root{
+  color-scheme: dark;
+  --bg:#060b2b;
+  --bg-2:#0b1446;
+  --panel:#0f1a52;
+  --panel-2:#13205f;
+  --line:#25357a;
+  --fg:#eef2ff;
+  --muted:#a9b5df;
+  --teal:#2ec4b6;
+  --teal-soft:rgba(46,196,182,.14);
+  --glow:#1f6bff;
+  --fill:#ffd36e;
+  --fill-bg:rgba(255,211,110,.14);
+  --display:"Caladea","Cambria",Georgia,serif;
+  --body:Arial,"Helvetica Neue",Helvetica,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (min-width:760px){html{scroll-padding-top:108px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 500px at 85% -5%, rgba(31,107,255,.35), transparent 60%),
+    radial-gradient(700px 500px at -10% 30%, rgba(46,196,182,.10), transparent 60%);
+  background-repeat:no-repeat;
+}
+.wrap{max-width:760px;margin:0 auto;padding-inline:18px}
+a{color:var(--teal)}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);color:var(--teal);text-wrap:balance;margin:0;font-weight:700;line-height:1.15}
+h1{font-size:clamp(34px,8.5vw,56px);color:var(--fg);display:grid;gap:4px}
+h1 em{color:var(--teal);font-style:italic;font-weight:400}
+.quote-by{font-size:13px;color:var(--muted);margin-top:-6px}
+.callout{font-family:var(--display);font-weight:700;font-size:clamp(24px,5.5vw,30px);color:var(--fg);line-height:1.2;margin-top:6px}
+h2{font-size:clamp(28px,6.5vw,38px)}
+h3{font-size:22px}
+p{margin:0}
+.muted{color:var(--muted)}
+
+/* Hero */
+.hero{padding-block:48px 28px;display:grid;gap:18px}
+.hero .lede{font-size:18px;color:var(--muted);max-width:52ch}
+.byline{font-size:14px;color:var(--muted)}
+.byline strong{color:var(--fg);font-weight:600}
+
+.save{font-size:14px;color:var(--fg);padding:10px 14px;border:1px dashed var(--teal);border-radius:10px;width:fit-content;max-width:100%}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(6,11,43,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:8px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav .wrap::after{content:"";flex:0 0 8px}
+@media (max-width:759px){.nav .wrap{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}}
+@media (min-width:760px){.nav .wrap{flex-wrap:wrap;overflow-x:visible}.nav .wrap::after{display:none}}
+.nav a{flex:0 0 auto;text-decoration:none;color:var(--fg);font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.nav a:hover{border-color:var(--teal);color:var(--teal)}
+
+section{padding-block:44px 8px;display:grid;gap:18px}
+.sec-head{display:grid;gap:8px}
+.sec-head p{color:var(--muted);max-width:60ch}
+.sec-head p.cta{color:var(--fg);font-weight:600}
+
+/* Week checklist */
+.week{display:grid;gap:10px;list-style:none;margin:0;padding:0}
+.day{padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.dtxt{display:grid;gap:2px;min-width:0}
+.extras{display:grid;gap:12px;padding:18px;border:1px dashed var(--teal);border-radius:12px;background:var(--teal-soft);margin-top:6px}
+.extras h3{font-size:22px}
+.extras p.muted{font-size:15px}
+.extra-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:10px;list-style:none;margin:0;padding:0}
+.extra-list li{display:grid;gap:2px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.extra-list strong{font-weight:600}
+.extra-list span{color:var(--muted);font-size:14px}
+.day .d{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+.day strong{font-weight:600}
+.day span.t{color:var(--muted);font-size:15px}
+
+/* Pick your AI */
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px}
+.ai{padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;display:grid;gap:6px;align-content:start}
+.ai .tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.ai h3{color:var(--fg);font-size:21px}
+.ai p{color:var(--muted);font-size:15px}
+.ai p.ai-note{font-size:14px;border-top:1px solid var(--line);padding-top:8px;margin-top:4px}
+.ai-note strong{color:var(--fill);font-weight:600}
+.ai-note.ok strong{color:var(--teal)}
+.closer{font-family:var(--display);font-size:22px;color:var(--fg);line-height:1.3}
+.warn{padding:16px 18px;border:1px solid var(--fill);background:var(--fill-bg);border-radius:12px;font-size:15px}
+.warn strong{color:var(--fill)}
+div.warn{display:grid;gap:8px}
+
+/* Acts */
+.act{display:grid;gap:14px}
+.act-label{display:flex;align-items:baseline;gap:12px;padding-top:10px;border-top:1px solid var(--line)}
+.act-label .n{font-family:var(--display);font-size:15px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase}
+.act-label h3{color:var(--fg);font-size:26px}
+.tech{display:grid;gap:10px;padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.tech h4{margin:0;font-family:var(--display);font-size:21px;color:var(--teal);font-weight:700}
+.tech > p{color:var(--muted);font-size:15px}
+.tip{font-size:14px;color:var(--muted);border-left:2px solid var(--teal);padding-left:12px}
+.tip strong{color:var(--fg);font-weight:600}
+
+/* Prompt blocks */
+.prompt{position:relative;background:#050925;border:1px solid var(--line);border-radius:10px;min-width:0}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px 8px 14px;border-bottom:1px solid var(--line)}
+.prompt .ph span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.prompt.before .ph span{color:#f19a9a}
+.prompt pre{margin:0;padding:14px;white-space:pre-wrap;word-wrap:break-word;font-family:var(--mono);font-size:13.5px;line-height:1.6;color:var(--fg)}
+.prompt.skill pre{max-height:none}
+.fill{color:var(--fill);background:var(--fill-bg);border-radius:4px;padding:0 3px}
+.copy{font:600 12px var(--body);color:var(--bg);background:var(--teal);border:0;border-radius:999px;padding:6px 12px;cursor:pointer;min-height:30px}
+.copy:hover{filter:brightness(1.1)}
+.copy.done{background:var(--fg)}
+.chain{display:grid;gap:0;counter-reset:c;list-style:none;margin:0;padding:4px 14px}
+.chain li{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-family:var(--mono);font-size:13.5px}
+.chain li:last-child{border-bottom:0}
+.chain li::before{counter-increment:c;content:"Prompt " counter(c);font-family:var(--body);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);padding-top:2px;white-space:nowrap}
+
+/* Uses */
+.uses{display:grid;gap:12px}
+
+/* Skill */
+.how{display:grid;gap:10px;list-style:none;margin:0;padding:0}
+.how li{display:grid;gap:4px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.how li strong{color:var(--fill);font-family:var(--mono);font-size:13px;font-weight:500}
+.how li span{color:var(--muted);font-size:15px}
+.steps{margin:0;padding-left:22px;display:grid;gap:8px;color:var(--fg)}
+.steps li::marker{color:var(--teal);font-weight:700}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font:600 14px var(--body);color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--teal);color:var(--bg);border-color:var(--teal)}
+.tabpanel{padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;display:grid;gap:12px}
+.tabpanel .small{font-size:14px;color:var(--muted)}
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+details[open]{display:grid;gap:12px}
+summary{cursor:pointer;font-weight:600;color:var(--fg)}
+summary span{color:var(--muted);font-weight:400}
+
+.asks{margin:0;padding-left:20px;display:grid;gap:6px;color:var(--fg)}
+.asks li::marker{color:var(--teal)}
+
+.followups{display:grid;gap:12px}
+.fgroup{display:grid;gap:6px}
+.fg-h{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal)}
+.lines{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.lines li{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 10px 10px 14px;background:#050925;border:1px solid var(--line);border-radius:10px}
+.lines .lt{font-family:var(--mono);font-size:13.5px;line-height:1.55;min-width:0}
+.steps-chain{counter-reset:st}
+.steps-chain li{grid-template-columns:auto 1fr auto}
+.steps-chain li::before{counter-increment:st;content:counter(st);font:700 13px var(--body);color:var(--bg);background:var(--teal);width:22px;height:22px;border-radius:50%;display:grid;place-content:center}
+.copy.sm{padding:5px 10px;min-height:28px}
+
+.levelup{display:grid;gap:10px;padding:22px 20px;border-radius:14px;border:1px solid var(--teal);background:linear-gradient(135deg,rgba(46,196,182,.22),rgba(31,107,255,.18))}
+.levelup .eyebrow{color:var(--teal)}
+.lu-big{font-family:var(--display);font-weight:700;font-size:clamp(24px,5.5vw,30px);line-height:1.2;color:var(--fg);text-wrap:balance}
+.levelup p:not(.eyebrow):not(.lu-big){color:var(--fg);opacity:.9;max-width:60ch}
+.lu-next{font-weight:600;opacity:1!important}
+
+.qa{display:grid;gap:6px;padding:14px 16px;border-radius:10px;background:var(--teal-soft);border:1px solid var(--teal)}
+.qa p{font-size:15px;color:var(--fg)}
+.qa strong{font-weight:600}
+
+.skill-h{font-size:26px;color:var(--teal);margin-top:10px}
+.skill-anchor{height:0}
+
+.signoff{display:grid;gap:8px;padding-top:18px;margin-top:4px;border-top:1px solid var(--line)}
+
+/* Agents */
+.flow-wrap{display:grid;gap:6px}
+.loop{font-size:13px;color:var(--teal);letter-spacing:.04em}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flow span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;border:1px solid var(--teal);border-radius:8px;color:var(--teal);background:var(--teal-soft)}
+.flow i{color:var(--muted);font-style:normal}
+
+/* Links */
+.links{display:grid;gap:10px;list-style:none;margin:0;padding:0}
+.links a{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--fg)}
+.links a:hover{border-color:var(--teal)}
+.links .kind{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);background:var(--teal);border-radius:4px;padding:3px 6px;font-weight:700}
+.links .kind.course{background:var(--fill)}
+.links .txt{display:grid;gap:2px;min-width:0}
+.links .txt strong{font-weight:600}
+.links .txt span{font-size:14px;color:var(--muted)}
+.links .arr{color:var(--teal);font-size:18px}
+
+/* Connect */
+.connect{padding:22px;background:linear-gradient(160deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:14px;display:grid;gap:16px}
+.reasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;list-style:none;margin:0;padding:0}
+.reasons li{display:grid;gap:4px;padding:14px 16px;background:rgba(5,9,37,.6);border:1px solid var(--line);border-radius:10px}
+.reasons strong{color:var(--teal);font-family:var(--display);font-size:19px}
+.reasons span{color:var(--muted);font-size:15px}
+
+/* Back to top */
+.totop{justify-self:end;font-size:13px;color:var(--muted);text-decoration:none;padding:6px 2px}
+.totop:hover{color:var(--teal)}
+
+/* Footer */
+footer{padding-block:24px 40px}
+footer .wrap{display:grid;gap:16px}
+.closing{font-family:var(--display);font-size:clamp(26px,6vw,34px);color:var(--fg);line-height:1.2}
+.closing em{color:var(--teal)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 15px var(--body);color:var(--bg);background:var(--teal);border-radius:999px;padding:12px 20px;text-decoration:none;width:fit-content}
+</style>
+</head>
+<body>
+
+<header class="wrap hero" id="top">
+  <p class="eyebrow">WOW26 · Keynote resources</p>
+  <h1><span>AI won't take your job.</span><em>Somebody who knows how to use it will.</em></h1>
+  <p class="quote-by">Adapted from Richard Baldwin, economist, World Economic Forum 2023</p>
+  <p class="callout">Make sure that's you.</p>
+  <p class="lede">Here are the prompts, the skill and the links from <em>The Future of the Forecast Analyst in an AI-Driven World</em>.</p>
+  <p class="byline"><strong>Stephen Coles</strong> · Data Analyst, RACQ</p>
+  <p class="save">Save this page now: bookmark it or send the link to yourself, so you can come back to it.</p>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a href="#week">This week</a>
+    <a href="#pick">Pick your AI</a>
+    <a href="#uses">What to try</a>
+    <a href="#talk">Talk</a>
+    <a href="#trust">Trust</a>
+    <a href="#build">Build</a>
+    <a href="#skill">Your first skill</a>
+    <a href="#agents">Agents</a>
+    <a href="#learn">Keep learning</a>
+    <a href="#connect">Connect</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="week">
+    <div class="sec-head">
+      <h2>Start this week</h2>
+      <p>Everyone has to start somewhere. The people getting ahead with AI aren't smarter than you. They just started earlier. Reading this page won't change how you work. Using it will.</p>
+      <p class="cta">So start this week. A few minutes a day, on work you're already doing. Each day builds on the one before, and by Friday you'll have saved your first skill.</p>
+    </div>
+    <p class="tip">Use the AI your company has approved. Not sure which one suits you? See <a href="#pick">Pick your AI</a>.</p>
+    <ol class="week">
+      <li class="day"><div class="dtxt"><span class="d">Monday</span><strong>Rewrite one prompt</strong><span class="t">Take something you'd normally ask in one line. Add a role, the context, and your constraints.</span></div></li>
+      <li class="day"><div class="dtxt"><span class="d">Tuesday</span><strong>Let it interview you</strong><span class="t">On a real task, end your prompt with "Before you answer, interview me. Don't start until I've answered."</span></div></li>
+      <li class="day"><div class="dtxt"><span class="d">Wednesday</span><strong>Have a conversation</strong><span class="t">Don't take the first answer. Push back, ask a follow-up, ask what it assumed. Go at least three rounds.</span></div></li>
+      <li class="day"><div class="dtxt"><span class="d">Thursday</span><strong>Put all three together</strong><span class="t">Pick one real task. Write a specific prompt, let it interview you, then keep the conversation going until the answer is one you'd actually use.</span></div></li>
+      <li class="day"><div class="dtxt"><span class="d">Friday</span><strong>Save your first skill</strong><span class="t">Customise the email skill below and test it on three emails you've already sent.</span></div></li>
+    </ol>
+    <div class="extras">
+      <h3>Next time you're working with numbers</h3>
+      <p class="muted">You won't need these every day. Save them for the next time a number really matters, like a staffing calculation, a variance or a forecast check.</p>
+      <ul class="extra-list">
+        <li><strong>Make it calculate</strong><span>Ask it to write and run code. Don't let it guess the maths.</span></li>
+        <li><strong>Chain it</strong><span>Break the problem into steps and check each one before moving on.</span></li>
+        <li><strong>Verify it</strong><span>Check it against something you trust, or have it check using a different method.</span></li>
+      </ul>
+      <p class="tip">The prompts are in <a href="#trust">Act 2: Trust it</a>.</p>
+    </div>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+
+  <section id="pick">
+    <div class="sec-head">
+      <h2>Pick your AI</h2>
+      <p>Every technique on this page can work in all four, but some depend on which version you have (free or paid), your settings, and what your company has switched on. For maths, check your version can actually run code first: there's a quick test in <a href="#trust">Act 2</a>. Here's my take on where each one shines.</p>
+    </div>
+    <div class="ai-grid">
+      <article class="ai"><p class="tag">Best for work</p><h3>Microsoft Copilot</h3><p>What most companies use. It sits inside Outlook, Teams, Word and Excel, and it can work with your work files.</p><p class="ai-note"><strong>Not the best for code or maths.</strong> The free version I tested couldn't run code. Running code may need a paid version, like the Microsoft 365 Copilot many workplaces use. If you have access to GitHub Copilot, use that for code and calculations instead. It's what I use at work.</p></article>
+      <article class="ai"><p class="tag">The all-rounder</p><h3>ChatGPT</h3><p>The king of general AI use. It covers almost everything well, but it doesn't specialise.</p><p class="ai-note"><strong>Check before you do maths.</strong> The free version I tested couldn't run code. Running code may need a paid version, including the business versions workplaces use. Run the <a href="#trust">test in Act 2</a> before you trust it with numbers.</p></article>
+      <article class="ai"><p class="tag">Technical work and deep thinking</p><h3>Claude</h3><p>Great if you're more technical: code, data and analysis. Also very strong at long documents and writing.</p><p class="ai-note ok"><strong>My choice at home.</strong> I pay for it myself and use it for family use, code work, building apps and agentic tasks. It ran code in my testing. If you have access to it, I recommend it.</p></article>
+      <article class="ai"><p class="tag">If your work runs on Google</p><h3>Gemini</h3><p>Built into Gmail, Docs and Sheets, and a strong all-round chat assistant as well.</p><p class="ai-note ok"><strong>Ran code in my testing.</strong> The free version ran the Erlang C code and got the right answer, but it only let me ask one question before asking me to pay.</p></article>
+    </div>
+    <p class="closer">The best AI is the one you'll actually use.</p>
+    <p class="warn"><strong>At work, use the tool your company has approved and follow its rules for using it.</strong> Never paste customer data into any AI tool, especially personal details like names, addresses, phone numbers or account numbers. You don't always know where that data ends up. If you're not sure what's OK to share, check your company's policy.</p>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+
+  <section id="uses">
+    <div class="sec-head">
+      <h2>Not sure what to try first? Start here</h2>
+      <p>Three ways I use AI every week. They're ready to go for your five-day plan. Paste your own material where it says to.</p>
+    </div>
+    <div class="uses">
+      <article class="tech">
+        <h4>Tutor me</h4>
+        <p>How I learned to code on the job. Get it to explain as it goes, so you're learning, not just copying.</p>
+        <div class="prompt"><div class="ph"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>I'm learning <span class="fill">[SQL / Excel / Python]</span>. Explain what this does, line by line, as if I've never written code before. Then give me one small exercise to check I've understood it.
+
+<span class="fill">[paste the code or formula]</span></pre></div>
+      </article>
+      <article class="tech">
+        <h4>Document what I built</h4>
+        <p>The job everyone puts off. Get the first draft in seconds, then fix what it got wrong.</p>
+        <div class="prompt"><div class="ph"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Here's a <span class="fill">[SQL query / Excel model / process]</span> I built. Write documentation for it in markdown: what it does, the inputs, the outputs, the assumptions, and how to update it. Write it for a colleague who has never seen it. Before you start, ask me anything you need to know.
+
+<span class="fill">[paste it here]</span></pre></div>
+      </article>
+      <article class="tech" id="meeting-notes">
+        <h4>Turn meeting notes into forecast assumptions</h4>
+        <p>Campaigns, launches and outages get mentioned in meetings and never reach the forecast. Catch them.</p>
+        <div class="prompt"><div class="ph"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>Here are notes from our planning meeting. Pull out anything that could affect the forecast: campaigns, product or policy changes, system outages, staffing changes and dates. Put them in a table with: date, event, likely impact on volume or AHT, and who mentioned it. List anything unclear as questions for me. Don't guess.
+
+<span class="fill">[paste the notes or transcript]</span></pre></div>
+      </article>
+    </div>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+
+  <section id="talk" class="act">
+    <div class="sec-head">
+      <h2>The skills from the talk</h2>
+      <p>Three parts, in the same order as the talk: how you talk to AI, how much you trust what it gives you, and what you build with it. Each one has the prompts from the slides, ready to copy and use.</p>
+      <p class="cta">The slide prompts are short so they fit on a slide. Treat them as a foundation and build on them. The bigger the question, the more detail it needs.</p>
+    </div>
+    <div class="act-label"><span class="n">Act 1</span><h3>Talk to it</h3></div>
+
+    <article class="tech">
+      <h4>Prompt engineering</h4>
+      <p>Vague prompts get vague answers. Give it a role, the context, and your constraints, not just a task.</p>
+      <div class="prompt before"><div class="ph"><span>Before</span></div><pre>Can you tell me the equation to find out how many staff I need?</pre></div>
+      <div class="prompt"><div class="ph"><span>After · from the slide</span><button class="copy" type="button">Copy</button></div><pre>You are a forecast analyst. Can you tell me how to use Erlang C to calculate staffing requirements? I need it at the interval level, and I am trying to achieve a service level of 60% of calls answered in 30 seconds.</pre></div>
+      <p class="tip">Role: who it should act as. Context: what it needs to know. Constraints: the boundaries it works within. For real work, add two more: what success looks like, and the format you want the answer in.</p>
+      <div class="prompt"><div class="ph"><span>Template · works for any task</span><button class="copy" type="button">Copy</button></div><pre>You are <span class="fill">[role, e.g. an experienced workforce planner]</span>.
+I need <span class="fill">[the task]</span> for <span class="fill">[who it is for]</span>.
+Context: <span class="fill">[what it needs to know: the situation, the data, what you have already tried]</span>.
+Success looks like: <span class="fill">[what a great answer would let you do]</span>.
+Constraints: <span class="fill">[targets, limits, rules, length]</span>.
+Give me the answer as <span class="fill">[a table, an email, numbered steps, three options]</span>.</pre></div>
+      <details>
+        <summary>See the slide example built out for real work</summary>
+        <div class="prompt"><div class="ph"><span>Built out</span><button class="copy" type="button">Copy</button></div><pre>You are an experienced workforce planner in an Australian contact centre.
+I need to work out staffing requirements for next Monday, and I want to understand the method, not just get a number.
+Context: we forecast in 30-minute intervals. Our busiest interval is 10:00 to 10:30, with 420 calls forecast and an average handle time of 380 seconds.
+Constraints: use the Erlang C formula. Our service level target is 60% of calls answered in 30 seconds, and we cap occupancy at 85%.
+Give me the answer as:
+1. A plain-English explanation of how Erlang C works, step by step.
+2. A worked example using my 10:00 to 10:30 interval.
+3. The data I'd need to do this for the whole day, and how to lay it out in a spreadsheet.</pre></div>
+        <p class="tip">The numbers are made up. Swap in your own. When you're ready to do the whole day, attach your data in that layout and ask it to calculate with code. See <a href="#trust">Act 2: Trust it</a>.</p>
+      </details>
+      <div class="warn">
+        <p><strong>AI isn't great at maths. If you need a number you can trust, ask it to write and run code.</strong></p>
+        <p>When I ran the built-out version of this prompt in an AI tool, the explanation was good. But it skipped the actual service level calculation and guessed the answer would be "a bit above 105 agents". Running the real Erlang C formula in code gives exactly 105. The service level target is met at 93 agents, and the 85% occupancy cap is what pushes it to 105. The method was right. The number was a confident guess.</p>
+          <p>Then I asked it to write and run the code. It wrote correct code, said it had run it, and reported 107 agents. When I pushed it, it said 108, "confirmed by execution". The version I was using couldn't run code, so it made up the output. Another tool with code running switched on ran the same code and got 105. Saying it ran the code isn't the same as running it.</p>
+      </div>
+      <div class="prompt"><div class="ph"><span>Follow-up to get a number you can trust</span><button class="copy" type="button">Copy</button></div><pre>Now write and run Python code that applies the Erlang C formula to my 10:00 to 10:30 interval. Show the service level and occupancy for each agent count from 89 to 110, and tell me the smallest number of agents that meets both targets. Show me the code.</pre></div>
+    </article>
+
+    <article class="tech">
+      <h4>Interview me first</h4>
+      <p>You don't always know what detail you're missing. Ask it to question you before it answers. It guesses less, and you'll spot gaps in your own thinking. It works on anything: a forecast, a report, a presentation, a tricky email.</p>
+      <div class="prompt"><div class="ph"><span>Add this to the end of any prompt</span><button class="copy" type="button">Copy</button></div><pre>Before you answer, interview me. Ask me up to five questions you need to get this right, most important first. Ask them all at once, then stop. Don't start the task until I've answered. If I don't know an answer, suggest a sensible default and tell me what you assumed.</pre></div>
+      <div class="prompt"><div class="ph"><span>For bigger tasks</span><button class="copy" type="button">Copy</button></div><pre>I want to <span class="fill">[the task]</span>. Before you start, interview me. Ask one question at a time and wait for my answer before asking the next. Don't start the task until the interview is finished. Ask no more than 10 questions, and I can say "go" at any point. If I don't know an answer, suggest a sensible default. When you have enough, tell me what you've understood and check it with me before you begin.</pre></div>
+      <p class="tip">Use them with any prompt. For a good first try, add one to a prompt you wrote with the template above. All at once is quicker. One at a time goes deeper, because each question builds on your last answer.</p>
+      <details>
+        <summary>See what it might ask you</summary>
+        <p class="muted">Add the short version to the Erlang C prompt from the slide, and you might get questions like these:</p>
+        <ul class="asks">
+          <li>Is your forecast calls offered or calls handled?</li>
+          <li>Does your AHT include wrap time?</li>
+          <li>Should abandoned calls count towards your service level?</li>
+        </ul>
+        <p class="tip">If any of those made you stop and think, that's the point. It's finding the gaps in your thinking, not just its own.</p>
+      </details>
+    </article>
+
+    <article class="tech">
+      <h4>Treat it as a conversation, not a search bar</h4>
+      <p>One prompt rarely gets the final answer. Push back, ask follow-ups and refine as you go. The best answer often comes from question 3, not question 1. The Erlang C example above is this in action: the first answer explained the method, and the follow-up got a number you can trust.</p>
+      <div class="followups">
+        <div class="fgroup"><p class="fg-h">When you don't understand it</p><ul class="lines"><li><span class="lt">Explain <span class="fill">[the part you don&#39;t follow]</span> again, more simply.</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li></ul></div>
+        <div class="fgroup"><p class="fg-h">When you're not sure it's right</p><ul class="lines"><li><span class="lt">What assumptions did you make in that answer?</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li><li><span class="lt">What's the weakest part of this answer?</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li><li><span class="lt">What would a sceptical manager ask about this?</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li></ul></div>
+        <div class="fgroup"><p class="fg-h">When it's close but not quite</p><ul class="lines"><li><span class="lt">Give me three different options instead of one.</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li><li><span class="lt">What would change if <span class="fill">[something was different]</span>?</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li></ul></div>
+        <div class="fgroup"><p class="fg-h">When you know it's wrong</p><ul class="lines"><li><span class="lt">That doesn't match what I see. In my data, <span class="fill">[what you know]</span>. Rework it with that in mind.</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li></ul></div>
+      </div>
+      <p class="tip">If you push back and it instantly agrees, be suspicious. AI often caves even when it was right. Ask it why it changed its answer.</p>
+      <p class="tip">If it gets stuck or goes round in circles, ask it to summarise what you've agreed so far. Then start a new chat with that summary.</p>
+      <p class="tip">Keep using the first two skills as you go. Each follow-up is a prompt too, so be specific, and ask it to interview you again if the task changes.</p>
+    </article>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+
+  <section id="trust" class="act">
+    <div class="levelup">
+      <p class="eyebrow">Level up</p>
+      <p class="lu-big">You've just taken your AI skills to a new level.</p>
+      <p>Better prompts, letting it interview you, and treating it as a conversation. Three simple changes, and once you're doing them together, you're working with AI, not just asking it questions.</p>
+      <p class="lu-next">Now let's take it to the next level: knowing when to trust what it gives you.</p>
+    </div>
+    <div class="act-label"><span class="n">Act 2</span><h3>Trust it</h3></div>
+
+    <article class="tech">
+      <h4>Estimate vs calculate</h4>
+      <p>AI will happily estimate a number instead of calculating it, and the estimate can sound exact. Maths isn't natural for a language model. Make it write and run code. Use this whenever a number will leave your desk: in a report, an email or a decision.</p>
+      <div class="warn">
+        <p><strong>Before you do any maths, make sure your AI can actually run code.</strong></p>
+        <p>Some tools and versions can't, or have it switched off. Instead of telling you, they write the code and make up the result. Check your tool's settings or ask your IT team, then run this quick test.</p>
+      </div>
+      <div class="prompt"><div class="ph"><span>Test · does it really run code?</span><button class="copy" type="button">Copy</button></div><pre>Run this Python code and show me the exact output:
+import hashlib
+print(hashlib.sha256(b"WOW26").hexdigest()[:10])</pre></div>
+      <p class="tip"><strong>The right answer is 198b19a1ed.</strong> Nobody can work that out in their head, AI included. If you get anything else, your tool isn't running code, and you shouldn't trust it with numbers.</p>
+      <div class="prompt"><div class="ph"><span>Works for any calculation</span><button class="copy" type="button">Copy</button></div><pre>Write and run code to calculate this. Don't estimate. Show me the inputs you used and the result, then explain in plain English what the code does. Include the code at the end.</pre></div>
+      <div class="prompt"><div class="ph"><span>Example · Erlang C</span><button class="copy" type="button">Copy</button></div><pre>Write and run Python code that calculates my staffing requirement using the actual Erlang C formula. Don't estimate. Show me the inputs you used and the result, then explain in plain English what the code does. Include the code at the end.</pre></div>
+      <p class="tip"><strong>Check it actually ran the code.</strong> A tool saying it ran the code isn't proof. Ask the same question twice: real code gives the same answer every time. Change one input: if AHT goes up, agents should go up. For anything important, paste the code into a new chat or another tool and compare the results.</p>
+      <p class="tip"><strong>Check the inputs first.</strong> You don't need to read code to catch the most common mistakes: AHT in minutes instead of seconds, the wrong interval length, a target typed wrong.</p>
+    </article>
+
+    <article class="tech">
+      <h4>Chain it, don't cram it</h4>
+      <p>One giant prompt is one giant chance to get it wrong. A mistake early on carries quietly through to the end. Break it into small steps and check each one before you move on.</p>
+      <p class="tip"><strong>When to chain:</strong> if your prompt has "and then" in it more than once, break it up.</p>
+      <div class="prompt before"><div class="ph"><span>Cram</span></div><pre>Calculate my Erlang C staffing requirement, apply my occupancy cap, add shrinkage and show me what happens at a 50% service level.</pre></div>
+      <div class="fgroup"><p class="fg-h">Chain · send these one at a time</p><ol class="lines steps-chain"><li><span class="lt">Write and run code to calculate the Erlang C staffing requirement for my interval.</span><button class="copy sm" type="button" aria-label="Copy this step">Copy</button></li><li><span class="lt">Check the number, then apply my 85% occupancy cap.</span><button class="copy sm" type="button" aria-label="Copy this step">Copy</button></li><li><span class="lt">Check the number again, then add my shrinkage to get rostered agents.</span><button class="copy sm" type="button" aria-label="Copy this step">Copy</button></li><li><span class="lt">Check the number, then show me what happens if my service level target was 50% instead.</span><button class="copy sm" type="button" aria-label="Copy this step">Copy</button></li></ol></div>
+      <p class="tip"><strong>What "check" means:</strong> does it look right compared with what you know, like last week's actuals? Are the inputs right? Only send the next step when you're happy with this one.</p>
+      <div class="prompt"><div class="ph"><span>For any task · let it plan the chain</span><button class="copy" type="button">Copy</button></div><pre>Before we start, break this task into steps. List them, but don't do any yet. Then we'll do them one at a time, and I'll check each one before we move on.</pre></div>
+    </article>
+
+    <article class="tech" id="verify">
+      <h4>Verification</h4>
+      <p>The answer that sounds right is the most dangerous one. Confidence isn't correctness. Check it against something you trust, or make it check itself using a different method. The Erlang C example in Act 1 is this in action: an independent calculation caught the guess.</p>
+      <div class="qa">
+        <p><strong>This is the difference between letting AI do its own thing and using it properly at work.</strong></p>
+        <p>When a number goes into a report, an email or a decision, your name is on it, not the AI's. Checking it is quality assurance, the same as you'd do on any piece of work before it goes out. Get it wrong once and people stop trusting your numbers, whether AI made them or not. Get it right every time and you become the person whose numbers people rely on.</p>
+        <p>Checking your work was a big part of my Master of Analytics, and it's a foundation of any analyst role, forecasting included. AI doesn't change that. It makes it more important.</p>
+      </div>
+      <div class="prompt"><div class="ph"><span>For numbers</span><button class="copy" type="button">Copy</button></div><pre>How would you verify this result? List the checks, then run them using a different method from the one you used to get the answer. Show me each check and its result, and tell me what would make this answer wrong.</pre></div>
+      <div class="prompt"><div class="ph"><span>For summaries and documents</span><button class="copy" type="button">Copy</button></div><pre>Check your summary against the source. List anything you included that isn't in the source, and anything important you left out.</pre></div>
+      <p class="tip"><strong>Don't let it mark its own homework.</strong> If it made a wrong assumption the first time, it may repeat it when checking. For an independent check, paste the result into a new chat so it has no memory of how it got there.</p>
+      <p class="tip"><strong>Something you trust</strong> could be last week's actuals, a free online Erlang C calculator, or rules that can't be broken: agents must be more than the Erlangs, and occupancy can't be over 100%.</p>
+      <p class="tip"><strong>Match the check to the stakes.</strong> A quick sense check for your own use. An independent check for anything going to leadership.</p>
+    </article>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+
+  <section id="build" class="act">
+    <div class="levelup">
+      <p class="eyebrow">Level up again</p>
+      <p class="lu-big">You can now get good answers, and you know when to trust them.</p>
+      <p>Making it calculate, chaining the steps and checking the result turn a confident guess into something you can stand behind.</p>
+      <p class="lu-next">The final level: building it into something you can reuse, so you don't start from scratch every time.</p>
+    </div>
+    <div class="act-label"><span class="n">Act 3</span><h3>Build with it</h3></div>
+
+    <article class="tech">
+      <h4>Markdown as a knowledge base</h4>
+      <p>Stop re-explaining your context. Save it once in a markdown file (.md) and give it to the AI every time. Markdown is just plain text: # makes a heading and - makes a list. AI reads and writes it natively.</p>
+      <div class="prompt"><div class="ph"><span>Let AI write it for you</span><button class="copy" type="button">Copy</button></div><pre>Interview me about how my team forecasts: our targets, assumptions, definitions, and the things that affect our forecast. Ask one question at a time. Then write it up as a markdown file I can save.</pre></div>
+      <div class="prompt"><div class="ph"><span>What it might look like · my-forecasting-context.md</span><button class="copy" type="button">Copy</button></div><pre># My forecasting context
+Last updated: <span class="fill">[date]</span>
+
+## Targets
+- Service level: <span class="fill">[e.g. 60% of calls answered in 30 seconds]</span>
+- Occupancy cap: <span class="fill">[e.g. 85%]</span>
+
+## Assumptions
+- Shrinkage: <span class="fill">[e.g. 32%, made up of leave, training, meetings]</span>
+- Forecast at the interval level (30 minutes)
+
+## Definitions
+- AHT = talk + hold + wrap time
+
+## Things that affect our forecast
+- <span class="fill">[e.g. end of financial year peak in late June]</span>
+- <span class="fill">[e.g. marketing campaigns, usually announced two weeks out]</span>
+- <span class="fill">[e.g. system outages drive repeat calls for 2 to 3 days]</span></pre></div>
+      <p class="tip"><strong>The AI can't see the file unless you give it.</strong> Attach it at the start of each chat, or save it somewhere your tool can always see, like a Copilot Notebook or agent.</p>
+      <p class="tip"><strong>New to markdown?</strong> <a href="https://www.markdowntutorial.com/" target="_blank" rel="noopener">Markdown Tutorial</a> teaches the basics in about 10 minutes. It's free, and you practise as you go.</p>
+      <p class="tip"><strong>Saving it:</strong> write it in Notepad, choose "Save as type: All files" and name it something.md. Otherwise Notepad may save it as .md.txt.</p>
+      <p class="tip"><strong>Keep it current.</strong> If shrinkage changes and the file doesn't, every answer is wrong and still sounds confident. Review it monthly and update the date.</p>
+      <p class="tip"><strong>Bonus:</strong> the same file is easy for people to read too, and AI can turn it into a polished document or report.</p>
+    </article>
+
+
+    <div class="skill-anchor" id="skill"></div>
+    <div class="sec-head">
+      <h3 class="skill-h">Build your first skill</h3>
+      <p>A markdown file gives AI information. A skill gives it a process: a reusable instruction you teach once and use every time. Knowing how to build skills is the real skill.</p>
+      <p>In the talk I showed a staffing skill. This one is for everyone: an email writer. It's easy to check, too. You'll know straight away if the draft sounds like you.</p>
+    </div>
+
+    <div class="prompt skill">
+      <div class="ph"><span>email-skill.md</span><button class="copy" type="button">Copy skill</button></div>
+<pre># Skill: Write my work emails
+
+## When to use this
+Whenever I ask you to write, reply to, or tidy up an email.
+
+## About me
+- I'm a <span class="fill">[your role]</span> at <span class="fill">[your team or company]</span>.
+- I usually write to <span class="fill">[who: e.g. operations managers, team leaders, executives]</span>.
+
+## Before you write
+Interview me first. If I haven't already told you, ask me:
+1. Who is it to, and what's my relationship with them?
+2. What do I need them to know or do after reading it?
+3. Is there a deadline, or anything sensitive?
+Ask them all at once, then stop. Don't write the email until I've answered.
+
+## How I write
+- Tone: <span class="fill">[e.g. friendly but direct, no corporate jargon]</span>
+- Spelling: <span class="fill">[e.g. Australian English]</span>
+- Length: <span class="fill">[e.g. under 150 words, short paragraphs]</span>
+- Greeting: <span class="fill">[e.g. "Hi [name]," never "Dear"]</span>
+- Sign-off: <span class="fill">[e.g. "Cheers, Steve"]</span>
+- Words I never use: <span class="fill">[e.g. synergy, circle back, per my last email]</span>
+
+## Structure
+1. The point or the ask in the first two lines.
+2. Only the context they need.
+3. A clear next step, with a date if there is one.
+
+## Rules
+- Never invent facts, numbers, dates or names. If something is missing, write [CHECK: what's missing] in the draft.
+- If the email delivers bad news or pushes back, give me two versions: one softer, one more direct.
+- No bullet points unless I ask for them.
+
+## An email I'm happy with
+<span class="fill">[paste a real email you wrote that sounds like you, with names and anything confidential removed]</span>
+
+## When you're done
+Give me the subject line, then the email, then one line on anything you weren't sure about.</pre>
+    </div>
+
+    <div class="prompt"><div class="ph"><span>Don't want to fill it in yourself?</span><button class="copy" type="button">Copy</button></div><pre>Here's a skill template. Interview me to fill in everything in [brackets]. Ask one question at a time. When we're done, give me the finished skill, ready to save.
+
+<span class="fill">[paste the skill here]</span></pre></div>
+
+    <h3>What to customise</h3>
+    <ul class="how">
+      <li><strong>[About me]</strong><span>Who's writing and who's reading. This sets the level of detail and the vocabulary it uses.</span></li>
+      <li><strong>[How I write]</strong><span>The biggest lever on sounding like you. Not sure how to describe your style? Paste three emails you've sent and ask: "Describe my writing style as a list of rules I could give an AI."</span></li>
+      <li><strong>[An email I'm happy with]</strong><span>One real example beats ten rules. Strip out names and anything confidential first.</span></li>
+      <li><strong>[Rules]</strong><span>Add your own no-gos. Keep the [CHECK] rule: it stops the AI making things up and shows you where to look.</span></li>
+    </ul>
+
+    <h3>Test it before you trust it</h3>
+    <ol class="steps">
+      <li>Pick three emails you've already sent.</li>
+      <li>Give the skill the situation behind each one, not the email itself. For example: "I need to tell the ops manager next week's forecast is up 12% because of the billing change, and ask for 6 extra staff on Monday."</li>
+      <li>Compare its drafts with what you actually wrote.</li>
+      <li>Where it's off, ask: "What should I add to the skill so you get this right next time?" Update the skill, then test again. Two or three rounds is normal.</li>
+    </ol>
+
+    <h3>Make a skill for anything</h3>
+    <p class="muted">The email skill is a start. The real skill is building your own for the work you do every week: a forecast review, a variance explanation, a weekly report.</p>
+    <div class="prompt"><div class="ph"><span>Build your own skill</span><button class="copy" type="button">Copy</button></div><pre>I do <span class="fill">[task]</span> regularly. Interview me about how I do it: when I do it, what you'd need from me, the steps, my rules, and what good looks like. Ask one question at a time. Then write it up as a skill I can save.</pre></div>
+    <p class="tip">Then test it the same way: on real examples where you already know what good looks like.</p>
+
+    <h3>Use it in Copilot</h3>
+    <p class="muted">I've used Copilot here because it's what most workplaces use. There are two ways to use a skill in it, depending on what your company has given you. The steps use the email skill, but they work the same for any skill.</p>
+    <ul class="how">
+      <li><strong>Option 1 · Attach the file</strong><span>Works in any version of Copilot. You attach the skill at the start of each chat.</span></li>
+      <li><strong>Option 2 · Save it as an agent</strong><span>Uses Agent Builder, which most Microsoft 365 licences include, unless your IT team has turned it off. Connecting it to SharePoint and your work data needs a Microsoft 365 Copilot licence. Set it up once and it's always ready, with no attaching. If you can see "New agent" in Copilot, you can use it.</span></li>
+    </ul>
+    <div class="tabs" role="tablist" aria-label="Copilot version">
+      <button type="button" role="tab" id="tab-any" aria-selected="true" aria-controls="panel-any">Option 1 · Attach the file</button>
+      <button type="button" role="tab" id="tab-agent" aria-selected="false" aria-controls="panel-agent">Option 2 · Save as an agent</button>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="panel-any" aria-labelledby="tab-any">
+      <ol class="steps">
+        <li>Paste the skill into Notepad, fill in the brackets, and save it as <code>email-skill.md</code> in your OneDrive. Choose "Save as type: All files", or Notepad may add .txt to the end.</li>
+        <li>In Copilot Chat, select <strong>+</strong> and attach the file.</li>
+        <li>Say: "Follow the instructions in this file. I need an email to…"</li>
+      </ol>
+      <p class="small">Want your writing style in every chat? Paste the "How I write" section into Copilot's custom instructions (Settings → Personalisation), if your organisation has it turned on.</p>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="panel-agent" aria-labelledby="tab-agent" hidden>
+      <ol class="steps">
+        <li>In Microsoft 365 Copilot, select <strong>New agent</strong>, then <strong>Skip to configure</strong>.</li>
+        <li>Name it "Email writer" and give it a one-line description.</li>
+        <li>Paste your customised skill into <strong>Instructions</strong> (up to 8,000 characters).</li>
+        <li>Use the <strong>Try it</strong> panel to run your three test emails, then create it.</li>
+      </ol>
+      <p class="small">It now sits in your agent list, ready whenever you need it.</p>
+    </div>
+    <p class="tip">Using something else? In ChatGPT, use a Project or a custom GPT. In Claude, a Skill or a Project. In Gemini, a Gem. Same instructions, different place to save them.</p>
+
+    <details>
+      <summary>The staffing skill from the talk <span>· for forecast analysts</span></summary>
+      <div class="prompt"><div class="ph"><span>erlang-c-skill.md</span><button class="copy" type="button">Copy</button></div><pre># Skill: Erlang C staffing calculator
+
+Whenever I ask you for staffing calculations:
+- Always use the Erlang C formula. Never estimate.
+- Work at the interval level, not daily or weekly.
+- Ask me for call volume, AHT and my service level target.
+- Write and run code to calculate the result.
+- Chain it: base requirement, then occupancy, then shrinkage.
+- Before the final answer, explain how you verified it.</pre></div>
+      <p class="tip">Notice what's in it: everything from the talk, saved once so it happens every time.</p>
+      <p class="tip"><strong>This is the short version from the slide, not a finished skill.</strong> A real one needs your targets, your data layout, your shrinkage rules and how you check the result. Use the "Build your own skill" prompt above to build it out properly: paste this in as your starting point and let it interview you.</p>
+    </details>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+
+  <section id="agents">
+    <div class="sec-head">
+      <h2>When you're ready: agents</h2>
+      <p>Start with skills. An agent is just skills chained together and given permission to run on their own. It plans the steps, acts, checks its own work, and loops back if the check fails.</p>
+      <p class="tip">Not the same as the Copilot agent above. A Copilot agent from Agent Builder is a saved skill you still start yourself. The kind of agent here runs on its own, without you starting it.</p>
+    </div>
+    <div class="flow-wrap">
+      <div class="flow" aria-label="Agent loop"><span>Trigger</span><i>→</i><span>Plan</span><i>→</i><span>Act</span><i>→</i><span>Verify</span><i>→</i><span>Output</span></div>
+      <p class="loop">↺ Back to Plan if Verify fails</p>
+    </div>
+    <article class="tech">
+      <h4>One I built for the talk</h4>
+      <p>A demo to show how it works. It reads Teams meeting transcripts, pulls out anything that could affect the forecast, and adds it to the "Things that affect our forecast" section of a markdown knowledge base. An analyst checks that file before forecasting. It's the <a href="#meeting-notes">meeting-notes prompt</a> and the markdown file from this page, running on its own.</p>
+      <p class="tip">You still review what it adds. It does the work. You own the result.</p>
+    </article>
+    <p class="tip">Get one skill working reliably first. Copilot's Agent Builder is a good first step, and the last video in Keep learning walks you through it. Running on its own usually needs Copilot Studio and your IT team.</p>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+
+  <section id="learn">
+    <div class="sec-head">
+      <h2>Keep learning</h2>
+      <p>These take the basics from my talk and this page and build on them. They fill in the detail I didn't have time for and keep growing your knowledge. They're picked for people who are new to AI, but even experienced users will find important gaps they fill. They're in the order I'd work through them.</p>
+      <p class="cta">AI is changing fast. What works today will keep improving, so keep building on these foundations and keep looking for new things to learn.</p>
+    </div>
+    <ul class="links">
+      <li><a href="https://www.youtube.com/watch?v=LPZh9BOjkQs" target="_blank" rel="noopener"><span class="kind">Video</span><span class="txt"><strong>Large Language Models explained briefly</strong><span>3Blue1Brown · 7:57 · watch the first 3 minutes 18 seconds to see how AI comes up with its answers. It's why Act 2 matters.</span></span><span class="arr" aria-hidden="true">↗</span></a></li>
+      <li><a href="https://www.youtube.com/watch?v=jC4v5AS4RIM" target="_blank" rel="noopener"><span class="kind">Video</span><span class="txt"><strong>Master the Perfect ChatGPT Prompt Formula</strong><span>Jeff Su · 8:29 · a simple formula for better prompts. The title says ChatGPT, but it works in any AI tool.</span></span><span class="arr" aria-hidden="true">↗</span></a></li>
+      <li><a href="https://learn.microsoft.com/en-us/training/paths/explore-microsoft-365-copilot-business-chat" target="_blank" rel="noopener"><span class="kind course">Course</span><span class="txt"><strong>Build foundational generative AI skills</strong><span>Microsoft Learn · free · four short beginner modules on Copilot Chat, including writing effective prompts</span></span><span class="arr" aria-hidden="true">↗</span></a></li>
+      <li><a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations" target="_blank" rel="noopener"><span class="kind course">Course</span><span class="txt"><strong>AI Fluency: Framework &amp; Foundations</strong><span>Anthropic Academy · free · about 3 hours · how to work with any AI well, not just Claude</span></span><span class="arr" aria-hidden="true">↗</span></a></li>
+      <li><a href="https://www.youtube.com/watch?v=knOhSmOkqMM" target="_blank" rel="noopener"><span class="kind">Video</span><span class="txt"><strong>How to Use the NEW Agent Builder in Microsoft Copilot</strong><span>Mike Tholfsen, Microsoft · 10:27 · step by step, from instructions to testing. For when you're ready to save a skill as a Copilot agent (Option 2).</span></span><span class="arr" aria-hidden="true">↗</span></a></li>
+    </ul>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+
+  <section id="connect">
+    <div class="connect">
+      <div class="sec-head">
+        <h2>Keep the conversation going</h2>
+        <p>I started as a data analyst who had never written a line of code, and I learned with AI as my tutor. I'm sharing more of what works on LinkedIn, and I'd genuinely like to hear how you go.</p>
+      </div>
+      <ul class="reasons">
+        <li><strong>Questions</strong><span>Anything from the talk or this page you want to dig into.</span></li>
+        <li><strong>Wins</strong><span>A prompt that saved you an hour. A skill that worked. Share it.</span></li>
+        <li><strong>Struggles</strong><span>Stuck, or getting answers you don't trust? Tell me what's happening.</span></li>
+      </ul>
+      <a class="btn" href="https://www.linkedin.com/in/stephen-coles-14037717a" target="_blank" rel="noopener">Message me on LinkedIn ↗</a>
+      <div class="signoff">
+        <p class="closing">Keep learning. <em>Somebody else already is.</em></p>
+        <p class="byline"><strong>Stephen Coles</strong> · Data Analyst, RACQ · WOW26 · Last updated October 2026</p>
+      </div>
+    </div>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"></div>
+</footer>
+
+<script>
+(function(){
+  /* Copy buttons */
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var li = btn.closest('.lines li');
+      if (li){ var t = li.querySelector('.lt'); var lbl0 = btn.textContent;
+        var ok = function(){ btn.textContent = 'Copied'; btn.classList.add('done'); setTimeout(function(){ btn.textContent = lbl0; btn.classList.remove('done'); }, 1600); };
+        var fb = function(){ var r = document.createRange(); r.selectNodeContents(t); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); };
+        try { navigator.clipboard.writeText(t.textContent).then(ok, fb); } catch(e){ fb(); }
+        return; }
+      var box = btn.closest('.prompt');
+      var pre = box.querySelector('pre') || box.querySelector('.chain');
+      var text;
+      var items = box.querySelectorAll('.chain li');
+      if (items.length){ text = Array.prototype.map.call(items, function(li, i){ return 'Prompt ' + (i+1) + ': ' + li.textContent; }).join('\n'); }
+      else { text = pre.textContent; }
+      var label = btn.textContent;
+      function done(){ btn.textContent = 'Copied'; btn.classList.add('done'); setTimeout(function(){ btn.textContent = label; btn.classList.remove('done'); }, 1600); }
+      function fallback(){ var r = document.createRange(); r.selectNodeContents(pre); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected, now copy'; setTimeout(function(){ btn.textContent = label; }, 2200); }
+      try { navigator.clipboard.writeText(text).then(done, fallback); } catch(e){ fallback(); }
+    });
+  });
+
+  /* Tabs */
+  var tabs = document.querySelectorAll('[role="tab"]');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(o){ var on = o === t; o.setAttribute('aria-selected', on ? 'true' : 'false'); document.getElementById(o.getAttribute('aria-controls')).hidden = !on; });
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
