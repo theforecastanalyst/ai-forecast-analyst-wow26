@@ -329,6 +329,10 @@ footer .wrap{display:grid;gap:16px}
       <p class="cta">The slide prompts are short so they fit on a slide. Treat them as a foundation and build on them. The bigger the question, the more detail it needs.</p>
     </div>
     <div class="act-label"><span class="n">Act 1</span><h3>Talk to it</h3></div>
+    <div class="qa">
+      <p><strong>These are the foundations. Without them, nothing else you do with AI will get you the results you want.</strong></p>
+      <p>They work in any AI tool, including the free versions. You don't need a paid subscription, so anyone can start practising these today.</p>
+    </div>
 
     <article class="tech">
       <h4>Prompt engineering</h4>
@@ -345,21 +349,16 @@ Give me the answer as <span class="fill">[a table, an email, numbered steps, thr
       <details>
         <summary>See the slide example built out for real work</summary>
         <div class="prompt"><div class="ph"><span>Built out</span><button class="copy" type="button">Copy</button></div><pre>You are an experienced workforce planner in an Australian contact centre.
-I need to work out staffing requirements for next Monday, and I want to understand the method, not just get a number.
-Context: we forecast in 30-minute intervals. Our busiest interval is 10:00 to 10:30, with 420 calls forecast and an average handle time of 380 seconds.
-Constraints: use the Erlang C formula. Our service level target is 60% of calls answered in 30 seconds, and we cap occupancy at 85%.
+I need to understand how Erlang C works so I can work out staffing requirements myself.
+Context: we forecast in 30-minute intervals. I'm comfortable with Excel, but I've never used Erlang C.
+Constraints: our service level target is 60% of calls answered in 30 seconds, and we cap occupancy at 85%. Explain it in plain English, without heavy maths notation.
+Success looks like: I can explain the method to my manager and I know what data I need.
 Give me the answer as:
-1. A plain-English explanation of how Erlang C works, step by step.
-2. A worked example using my 10:00 to 10:30 interval.
-3. The data I'd need to do this for the whole day, and how to lay it out in a spreadsheet.</pre></div>
-        <p class="tip">The numbers are made up. Swap in your own. When you're ready to do the whole day, attach your data in that layout and ask it to calculate with code. See <a href="#trust">Act 2: Trust it</a>.</p>
+1. A step-by-step explanation of how Erlang C works.
+2. The inputs I need, and where each one usually comes from.
+3. How to lay out the data in a spreadsheet for a full day.</pre></div>
+        <p class="tip">This one is about understanding the method. When you're ready to work out the actual numbers, see <a href="#estimate">Estimate vs calculate</a> in Act 2.</p>
       </details>
-      <div class="warn">
-        <p><strong>AI isn't great at maths. If you need a number you can trust, ask it to write and run code.</strong></p>
-        <p>When I ran the built-out version of this prompt in an AI tool, the explanation was good. But it skipped the actual service level calculation and guessed the answer would be "a bit above 105 agents". Running the real Erlang C formula in code gives exactly 105. The service level target is met at 93 agents, and the 85% occupancy cap is what pushes it to 105. The method was right. The number was a confident guess.</p>
-          <p>Then I asked it to write and run the code. It wrote correct code, said it had run it, and reported 107 agents. When I pushed it, it said 108, "confirmed by execution". The version I was using couldn't run code, so it made up the output. Another tool with code running switched on ran the same code and got 105. Saying it ran the code isn't the same as running it.</p>
-      </div>
-      <div class="prompt"><div class="ph"><span>Follow-up to get a number you can trust</span><button class="copy" type="button">Copy</button></div><pre>Now write and run Python code that applies the Erlang C formula to my 10:00 to 10:30 interval. Show the service level and occupancy for each agent count from 89 to 110, and tell me the smallest number of agents that meets both targets. Show me the code.</pre></div>
     </article>
 
     <article class="tech">
@@ -382,7 +381,7 @@ Give me the answer as:
 
     <article class="tech">
       <h4>Treat it as a conversation, not a search bar</h4>
-      <p>One prompt rarely gets the final answer. Push back, ask follow-ups and refine as you go. The best answer often comes from question 3, not question 1. The Erlang C example above is this in action: the first answer explained the method, and the follow-up got a number you can trust.</p>
+      <p>One prompt rarely gets the final answer. Push back, ask follow-ups and refine as you go. The best answer often comes from question 3, not question 1. You'll see a real example of this in Act 2.</p>
       <div class="followups">
         <div class="fgroup"><p class="fg-h">When you don't understand it</p><ul class="lines"><li><span class="lt">Explain <span class="fill">[the part you don&#39;t follow]</span> again, more simply.</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li></ul></div>
         <div class="fgroup"><p class="fg-h">When you're not sure it's right</p><ul class="lines"><li><span class="lt">What assumptions did you make in that answer?</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li><li><span class="lt">What's the weakest part of this answer?</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li><li><span class="lt">What would a sceptical manager ask about this?</span><button class="copy sm" type="button" aria-label="Copy this follow-up">Copy</button></li></ul></div>
@@ -405,9 +404,10 @@ Give me the answer as:
     </div>
     <div class="act-label"><span class="n">Act 2</span><h3>Trust it</h3></div>
 
-    <article class="tech">
+    <article class="tech" id="estimate">
       <h4>Estimate vs calculate</h4>
       <p>AI will happily estimate a number instead of calculating it, and the estimate can sound exact. Maths isn't natural for a language model. Make it write and run code. Use this whenever a number will leave your desk: in a report, an email or a decision.</p>
+      <div class="prompt"><div class="ph"><span>Works for any calculation</span><button class="copy" type="button">Copy</button></div><pre>Write and run code to calculate this. Don't estimate. Show me the inputs you used and the result, then explain in plain English what the code does. Include the code at the end.</pre></div>
       <div class="warn">
         <p><strong>Before you do any maths, make sure your AI can actually run code.</strong></p>
         <p>Some tools and versions can't, or have it switched off. Instead of telling you, they write the code and make up the result. Check your tool's settings or ask your IT team, then run this quick test.</p>
@@ -416,10 +416,32 @@ Give me the answer as:
 import hashlib
 print(hashlib.sha256(b"WOW26").hexdigest()[:10])</pre></div>
       <p class="tip"><strong>The right answer is 198b19a1ed.</strong> Nobody can work that out in their head, AI included. If you get anything else, your tool isn't running code, and you shouldn't trust it with numbers.</p>
-      <div class="prompt"><div class="ph"><span>Works for any calculation</span><button class="copy" type="button">Copy</button></div><pre>Write and run code to calculate this. Don't estimate. Show me the inputs you used and the result, then explain in plain English what the code does. Include the code at the end.</pre></div>
-      <div class="prompt"><div class="ph"><span>Example · Erlang C</span><button class="copy" type="button">Copy</button></div><pre>Write and run Python code that calculates my staffing requirement using the actual Erlang C formula. Don't estimate. Show me the inputs you used and the result, then explain in plain English what the code does. Include the code at the end.</pre></div>
       <p class="tip"><strong>Check it actually ran the code.</strong> A tool saying it ran the code isn't proof. Ask the same question twice: real code gives the same answer every time. Change one input: if AHT goes up, agents should go up. For anything important, paste the code into a new chat or another tool and compare the results.</p>
       <p class="tip"><strong>Check the inputs first.</strong> You don't need to read code to catch the most common mistakes: AHT in minutes instead of seconds, the wrong interval length, a target typed wrong.</p>
+      <details>
+        <summary>See a worked example: Erlang C</summary>
+        <p class="fg-h">1 · The prompt I used</p>
+        <div class="prompt"><div class="ph"><span>Prompt</span><button class="copy" type="button">Copy</button></div><pre>You are an experienced workforce planner in an Australian contact centre.
+I need to work out staffing requirements for next Monday, and I want to understand the method, not just get a number.
+Context: we forecast in 30-minute intervals. Our busiest interval is 10:00 to 10:30, with 420 calls forecast and an average handle time of 380 seconds.
+Constraints: use the Erlang C formula. Our service level target is 60% of calls answered in 30 seconds, and we cap occupancy at 85%.
+Give me the answer as:
+1. A plain-English explanation of how Erlang C works, step by step.
+2. A worked example using my 10:00 to 10:30 interval.
+3. The data I'd need to do this for the whole day, and how to lay it out in a spreadsheet.</pre></div>
+        <p class="fg-h">2 · What happened</p>
+        <div class="qa">
+          <p>The explanation was good, but it skipped the actual service level calculation and guessed "a bit above 105 agents". Running the real Erlang C formula in code gives exactly 105. The service level target is met at 93 agents, and the 85% occupancy cap is what pushes it to 105. The method was right. The number was a confident guess.</p>
+        </div>
+        <p class="fg-h">3 · The follow-up: ask it to run code</p>
+        <div class="prompt"><div class="ph"><span>Follow-up</span><button class="copy" type="button">Copy</button></div><pre>Now write and run Python code that applies the Erlang C formula to my <span class="fill">[10:00 to 10:30]</span> interval. Don't estimate. Show the service level and occupancy for each agent count from <span class="fill">[89]</span> to <span class="fill">[110]</span>, and tell me the smallest number of agents that meets both targets. Show me the inputs you used and the result, then explain in plain English what the code does. Include the code at the end.</pre></div>
+        <p class="tip">The numbers are the ones from my test, so you can check your tool gets 105. Then swap in your own.</p>
+        <p class="fg-h">4 · What happened next</p>
+        <div class="qa">
+          <p>It wrote correct code, said it had run it, and reported 107 agents. When I pushed it, it said 108, "confirmed by execution". The version I was using (free Copilot) couldn't run code, so it made up the output. Another tool with code running switched on (paid Claude) ran the same code and got 105.</p>
+          <p><strong>Make sure your AI can actually run code, and always verify your outputs.</strong></p>
+        </div>
+      </details>
     </article>
 
     <article class="tech">
@@ -434,7 +456,7 @@ print(hashlib.sha256(b"WOW26").hexdigest()[:10])</pre></div>
 
     <article class="tech" id="verify">
       <h4>Verification</h4>
-      <p>The answer that sounds right is the most dangerous one. Confidence isn't correctness. Check it against something you trust, or make it check itself using a different method. The Erlang C example in Act 1 is this in action: an independent calculation caught the guess.</p>
+      <p>The answer that sounds right is the most dangerous one. Confidence isn't correctness. Check it against something you trust, or make it check itself using a different method. The Erlang C example in <a href="#estimate">Estimate vs calculate</a> is this in action: an independent calculation caught the guess.</p>
       <div class="qa">
         <p><strong>This is the difference between letting AI do its own thing and using it properly at work.</strong></p>
         <p>When a number goes into a report, an email or a decision, your name is on it, not the AI's. Checking it is quality assurance, the same as you'd do on any piece of work before it goes out. Get it wrong once and people stop trusting your numbers, whether AI made them or not. Get it right every time and you become the person whose numbers people rely on.</p>
